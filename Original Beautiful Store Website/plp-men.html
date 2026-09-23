@@ -309,13 +309,13 @@ function getCustomerData() {
 
   if (!user) {
     return {
-      customerID: "NA",
+      emailId: "NA",
       loginStatus: "guest"
     };
   }
 
   return {
-    customerID: user.email,
+    emailId: user.email,
     loginStatus: "logged-in"
   };
 }
