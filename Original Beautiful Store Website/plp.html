@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shop</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="data.js"></script>
+</head>
+<body>
+
+<header>
+  <h2>Shop</h2>
+  <a href="checkout.html">Checkout</a>
+</header>
+
+<div class="container grid" id="list"></div>
+
+<script>
+  const list = document.getElementById("list");
+
+  products.forEach(p => {
+    list.innerHTML += `
+      <div class="card">
+        <img src="${p.image}">
+        <h3>${p.name}</h3>
+        <div class="price">₹${p.price}</div>
+        <a href="pdp.html?id=${p.id}">
+          <button>View Product</button>
+        </a>
+      </div>
+    `;
+  });
+</script>
+
+</body>
+</html>

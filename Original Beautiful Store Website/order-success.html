@@ -1,0 +1,449 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Order Success | BeautifulStore</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+  background: #f5f5f5;
+  color: #222;
+}
+.container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 20px;
+}
+.card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+h1 {
+  color: #2a9d8f;
+  text-align: center;
+}
+h2 {
+  margin-top: 20px;
+}
+.order-item {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+.order-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+.order-item-details {
+  flex: 1;
+}
+.order-item-details h3 {
+  margin: 0;
+  text-transform: capitalize;
+}
+.order-item-details p {
+  margin: 5px 0;
+}
+.total {
+  font-size: 20px;
+  font-weight: 900;
+  text-align: right;
+  margin-top: 20px;
+}
+.btn-home {
+  display: block;
+  margin: 30px auto;
+  text-align: center;
+  background: #2a9d8f;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  width: fit-content;
+}
+</style>
+
+<script
+  src="https://assets.adobedtm.com/21b53c73144b/55224bfc5f5a/launch-6c2cbecd161e-development.min.js"
+  async>
+</script>
+</head>
+
+<body>
+
+<div class="container card">
+
+  <h1>🎉 Order Placed Successfully!</h1>
+
+  <p>
+    Thank you for shopping with BeautifulStore.
+    Your order has been confirmed.
+  </p>
+
+  <h2>Shipping Details</h2>
+  <p id="shipping-details"></p>
+
+  <h2>Ordered Items</h2>
+  <div id="order-items"></div>
+
+  <div class="total" id="order-total"></div>
+
+  <a href="index.html" class="btn-home">
+    Back to Home
+  </a>
+
+</div>
+
+<script>
+
+/* ============================================================
+   GET ORDER INFO
+============================================================ */
+
+const orderInfo =
+  JSON.parse(
+    localStorage.getItem('orderInfo')
+  );
+
+
+if (!orderInfo) {
+
+  alert("No order data found!");
+
+  window.location.href =
+    'index.html';
+
+}
+
+
+/* ============================================================
+   GENERATE UNIQUE ORDER ID
+============================================================ */
+
+function generateOrderId() {
+
+  return 'xxxxxxxxyxxxxyxxxyxxxxyxxxxyxxx'
+    .replace(/[xy]/g, function(c) {
+
+      const r =
+        Math.random() * 16 | 0;
+
+      const v =
+        c === 'x'
+          ? r
+          : (r & 0x3 | 0x8);
+
+      return v.toString(16);
+
+    })
+    .toUpperCase();
+
+}
+
+const orderId =
+  generateOrderId();
+
+
+/* ============================================================
+   RENDER ORDER DETAILS
+============================================================ */
+
+if (orderInfo) {
+
+  const shipping =
+    `${orderInfo.name}, ${orderInfo.phone}, ${orderInfo.street}, ${orderInfo.city}, ${orderInfo.state} - ${orderInfo.pincode}`;
+
+  document.getElementById(
+    'shipping-details'
+  ).textContent = shipping;
+
+
+  const container =
+    document.getElementById(
+      'order-items'
+    );
+
+
+  orderInfo.cart.forEach(item => {
+
+    const div =
+      document.createElement('div');
+
+    div.classList.add(
+      'order-item'
+    );
+
+
+    div.innerHTML = `
+      <img
+        src="${item.img || ''}"
+        alt="${item.productName || 'product'}"
+      />
+
+      <div class="order-item-details">
+
+        <h3>
+          ${item.productName || 'Unnamed Product'}
+        </h3>
+
+        <p>
+          Qty: ${item.qty}
+        </p>
+
+        <p>
+          Price: ₹${item.price}
+        </p>
+
+      </div>
+    `;
+
+
+    container.appendChild(div);
+
+  });
+
+
+  document.getElementById(
+    'order-total'
+  ).textContent =
+    'Total Amount: ₹' +
+    orderInfo.total;
+
+}
+
+
+/* ============================================================
+   ADOBE DATA LAYER
+============================================================ */
+
+window.adobeDataLayer =
+  window.adobeDataLayer || [];
+
+
+/* ============================================================
+   CUSTOMER CONTEXT
+============================================================ */
+
+const LOGGED_IN_USER_KEY =
+  "beautifulStore_loggedInUser";
+
+
+function getLoggedInUser(){
+
+  try {
+
+    return JSON.parse(
+      localStorage.getItem(
+        LOGGED_IN_USER_KEY
+      )
+    );
+
+  } catch(error) {
+
+    return null;
+
+  }
+
+}
+
+
+function getCustomerData(){
+
+  const user =
+    getLoggedInUser();
+
+
+  /*
+   * If user logged in before purchase
+   */
+  if(user){
+
+    return {
+
+      emailId:
+        user.email,
+
+      loginStatus:
+        "logged-in"
+
+    };
+
+  }
+
+
+  /*
+   * Guest checkout
+   */
+  return {
+
+    emailId:
+      "NA",
+
+    loginStatus:
+      "guest"
+
+  };
+
+}
+
+
+/* ============================================================
+   CART PRODUCT DATA
+============================================================ */
+
+function getCartProductData(item){
+
+  return {
+
+    SKU:
+      item.productID,
+
+    name:
+      item.productName,
+
+    priceTotal:
+      Number(item.price) || 0,
+
+    discountPercent:
+      item.discountPercent || null,
+
+    quantity:
+      Number(item.qty) || 0,
+
+    size:
+      item.size || '-',
+
+    color:
+      item.color || '-'
+
+  };
+
+}
+
+
+/* ============================================================
+   PURCHASE / ORDER CONFIRMATION
+============================================================ */
+
+if(orderInfo){
+
+  window.adobeDataLayer.push({
+
+    event:"pageLoaded",
+
+    xdmPageLoad:{
+
+      web:{
+
+        webPageDetails:{
+
+          pageName:
+            "Order Success",
+
+          pageType:
+            "Order Confirmation",
+
+          brand:
+            "BeautifulStore",
+
+          checkoutStep:
+            "confirmation"
+
+        }
+
+      },
+
+
+      commerce:{
+
+        /*
+         * PURCHASE SIGNAL
+         */
+        purchases:1,
+
+
+        /*
+         * ORDER INFORMATION
+         */
+        order:{
+
+          orderId:
+            orderId,
+
+          totalAmount:
+            Number(orderInfo.total) || 0,
+
+          paymentMethod:
+            orderInfo.paymentMethod || "NA",
+
+          itemCount:
+            orderInfo.cart.length
+
+        },
+
+
+        /*
+         * PRODUCTS PURCHASED
+         */
+        productListItems:
+          orderInfo.cart.map(
+            getCartProductData
+          )
+
+      },
+
+
+      /*
+       * CUSTOMER
+       */
+      custData:{
+
+        ...getCustomerData(),
+
+       // email:
+        //  orderInfo.email || "NA"
+
+      },
+
+
+      /*
+       * EVENT
+       */
+      eventInfo:{
+
+        eventName:
+          "purchase"
+
+      }
+
+    }
+
+  });
+
+}
+
+
+/* ============================================================
+   CLEAR ORDER INFO AFTER TRACKING
+============================================================ */
+
+localStorage.removeItem(
+  'orderInfo'
+);
+
+</script>
+
+</body>
+</html>

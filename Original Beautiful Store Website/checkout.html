@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart | BeautifulStore</title>
+
+<style>
+body{margin:0;font-family:'Segoe UI',Tahoma,Verdana,sans-serif;background:#f5f5f5;}
+header{background:#fff;padding:15px 30px;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;justify-content:space-between;align-items:center;}
+.logo{font-size:24px;font-weight:900;}
+nav a{margin-left:20px;text-decoration:none;color:#222;font-weight:600;cursor:pointer;}
+nav a:hover{color:#2a9d8f;}
+.container{max-width:1100px;margin:40px auto;padding:0 20px;display:grid;grid-template-columns:2fr 1fr;gap:30px;}
+.card{background:#fff;padding:25px;border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,.1);}
+h2{margin-top:0;}
+.cart-item{display:flex;gap:15px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #eee;}
+.cart-item img{width:100px;height:100px;object-fit:cover;border-radius:10px;}
+.cart-info{flex:1;}
+.cart-info h4{margin:0 0 6px;text-transform:capitalize;}
+.price{font-weight:700;margin:6px 0;}
+.qty{font-size:14px;color:#555;}
+.remove{background:none;border:none;color:#e63946;font-weight:700;cursor:pointer;padding:0;}
+.summary-row{display:flex;justify-content:space-between;margin:10px 0;}
+.total{font-size:20px;font-weight:900;}
+.checkout-btn{width:100%;padding:14px;background:#2a9d8f;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:800;cursor:pointer;margin-top:20px;}
+.checkout-btn:hover{background:#21867a}
+.empty{text-align:center;color:#777;}
+@media(max-width:900px){.container{grid-template-columns:1fr;}}
+</style>
+
+<script
+  src="https://assets.adobedtm.com/21b53c73144b/55224bfc5f5a/launch-6c2cbecd161e-development.min.js"
+  async>
+</script>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">BeautifulStore</div>
+  <nav>
+    <a class="header-nav" data-linkname="Home" href="index.html">Home</a>
+    <a class="header-nav" data-linkname="Men" href="plp-men.html">Men</a>
+    <a class="header-nav" data-linkname="Women" href="plp-women.html">Women</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+  </div>
+
+  <div class="card">
+    <h2>Price Details</h2>
+    <div class="summary-row">
+      <span>Subtotal</span>
+      <span id="subtotal">₹0</span>
+    </div>
+    <div class="summary-row">
+      <span>Shipping</span>
+      <span>FREE</span>
+    </div>
+    <hr>
+    <div class="summary-row total">
+      <span>Total</span>
+      <span id="total">₹0</span>
+    </div>
+    <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
+  </div>
+</div>
+
+<script>
+
+// ============================================================
+// INIT ADOBE DATALAYER
+// ============================================================
+
+window.adobeDataLayer = window.adobeDataLayer || [];
+
+
+// ============================================================
+// CUSTOMER CONTEXT
+// ============================================================
+
+const LOGGED_IN_USER_KEY = "beautifulStore_loggedInUser";
+
+function getLoggedInUser(){
+  try{
+    return JSON.parse(
+      localStorage.getItem(LOGGED_IN_USER_KEY)
+    );
+  }catch(error){
+    return null;
+  }
+}
+
+function getCustomerData(){
+
+  const user = getLoggedInUser();
+
+  if(!user){
+    return {
+      emailId:"NA",
+      loginStatus:"guest"
+    };
+  }
+
+  return {
+    emailId:user.email,
+    loginStatus:"logged-in"
+  };
+}
+
+
+// ============================================================
+// CART DATA
+// ============================================================
+
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+const cartContainer = document.getElementById('cart-items');
+const subtotalEl = document.getElementById('subtotal');
+const totalEl = document.getElementById('total');
+
+
+// ============================================================
+// CART PRODUCT DATA
+// ============================================================
+
+function getCartProductData(item){
+
+  return {
+    SKU:item.productID,
+    name:item.productName,
+    priceTotal:Number(item.price) || 0,
+    discountPercent:item.discountPercent || null,
+    quantity:Number(item.qty) || 0,
+    size:item.size || '-',
+    color:item.color || '-'
+  };
+
+}
+
+
+// ============================================================
+// RENDER CART
+// ============================================================
+
+function renderCart(){
+
+  cartContainer.innerHTML = '';
+
+  if(cart.length === 0){
+
+    cartContainer.innerHTML =
+      '<p class="empty">Your cart is empty</p>';
+
+    subtotalEl.textContent = '₹0';
+    totalEl.textContent = '₹0';
+
+    return;
+  }
+
+  let subtotal = 0;
+
+  cart.forEach((item,index)=>{
+
+    const price = Number(item.price) || 0;
+    const qty = Number(item.qty) || 0;
+
+    subtotal += price * qty;
+
+    const img =
+      item.img || 'https://via.placeholder.com/100';
+
+    cartContainer.innerHTML += `
+      <div class="cart-item">
+        <img src="${img}" alt="${item.productName}">
+
+        <div class="cart-info">
+
+          <h4>${item.productName}</h4>
+
+          <p class="price">₹${price}</p>
+
+          <p class="qty">
+            Qty: ${qty}
+          </p>
+
+          <p class="qty">
+            Size: ${item.size || '-'} |
+            Color: ${item.color || '-'}
+          </p>
+
+          <button
+            class="remove"
+            onclick="removeItem(${index})">
+            Remove
+          </button>
+
+        </div>
+      </div>
+    `;
+  });
+
+  subtotalEl.textContent = '₹' + subtotal;
+  totalEl.textContent = '₹' + subtotal;
+}
+
+
+// ============================================================
+// REMOVE ITEM
+// ============================================================
+
+function removeItem(index){
+
+  const removedItem = cart[index];
+
+  window.adobeDataLayer.push({
+
+    event:"linkClicked",
+
+    xdmActionDetails:{
+
+      web:{
+        webInteraction:{
+          linkName:"Remove from Cart",
+          linkType:"button",
+          brand:"BeautifulStore",
+          linkPageName:"Cart"
+        }
+      },
+
+      commerce:{
+        productListItems:[
+          getCartProductData(removedItem)
+        ]
+      },
+
+      custData:getCustomerData(),
+
+      eventInfo:{
+        eventName:"removeFromCart"
+      }
+
+    }
+
+  });
+
+
+  cart.splice(index,1);
+
+  localStorage.setItem(
+    'cart',
+    JSON.stringify(cart)
+  );
+
+  renderCart();
+}
+
+
+// ============================================================
+// INITIAL RENDER
+// ============================================================
+
+renderCart();
+
+
+// ============================================================
+// PAGE LOAD
+// ============================================================
+
+window.adobeDataLayer.push({
+
+  event:"pageLoaded",
+
+  xdmPageLoad:{
+
+    web:{
+      webPageDetails:{
+        pageName:"Cart",
+        pageType:"Cart",
+        brand:"BeautifulStore"
+      }
+    },
+
+    commerce:{
+      productListItems:
+        cart.map(getCartProductData)
+    },
+
+    custData:getCustomerData(),
+
+    eventInfo:{
+      eventName:"pageLoad"
+    }
+
+  }
+
+});
+
+
+// ============================================================
+// HEADER NAVIGATION
+// ============================================================
+
+document.querySelectorAll('.header-nav').forEach(link=>{
+
+  link.addEventListener('click',e=>{
+
+    window.adobeDataLayer.push({
+
+      event:"linkClicked",
+
+      xdmActionDetails:{
+
+        web:{
+          webInteraction:{
+            linkName:
+              e.currentTarget.dataset.linkname,
+
+            linkType:"button",
+
+            brand:"BeautifulStore",
+
+            linkPageName:"Cart"
+          }
+        },
+
+        custData:getCustomerData(),
+
+        eventInfo:{
+          eventName:"linkClick"
+        }
+
+      }
+
+    });
+
+  });
+
+});
+
+
+// ============================================================
+// CHECKOUT
+// ============================================================
+
+document
+  .getElementById('checkoutBtn')
+  .addEventListener('click',()=>{
+
+    window.adobeDataLayer.push({
+
+      event:"linkClicked",
+
+      xdmActionDetails:{
+
+        web:{
+          webInteraction:{
+            linkName:"Proceed to Checkout",
+            linkType:"button",
+            brand:"BeautifulStore",
+            linkPageName:"Cart"
+          }
+        },
+
+        commerce:{
+          productListItems:
+            cart.map(getCartProductData)
+        },
+
+        custData:getCustomerData(),
+
+        eventInfo:{
+          eventName:"checkout"
+        }
+
+      }
+
+    });
+
+    window.location.href =
+      'place-order.html';
+
+  });
+
+</script>
+
+</body>
+</html>

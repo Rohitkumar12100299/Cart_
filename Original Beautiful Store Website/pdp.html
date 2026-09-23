@@ -1,0 +1,643 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Detail | BeautifulStore</title>
+<style>
+body{font-family:'Segoe UI',Tahoma,Verdana,sans-serif;margin:0;background:#f9f9f9;color:#222}
+header.nav{background:white;padding:15px 30px;box-shadow:0 2px 8px rgb(0 0 0 / 0.1);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.logo{font-weight:900;font-size:24px;text-transform:lowercase}
+nav.main-nav a{margin-left:20px;text-decoration:none;color:#222;font-weight:600}
+nav.main-nav a:hover{color:#2a9d8f}
+.pdp-container{display:flex;flex-wrap:wrap;max-width:1200px;margin:40px auto;gap:40px;padding:20px;background:#fff;border-radius:12px;box-shadow:0 4px 14px rgb(0 0 0 / 0.1)}
+.pdp-image{flex:1;min-width:300px;display:flex;justify-content:center;align-items:center}
+.pdp-image img{max-width:100%;max-height:500px;border-radius:12px}
+.pdp-details{flex:1;min-width:300px;display:flex;flex-direction:column}
+.brand{font-size:24px;font-weight:900;text-transform:lowercase}
+.desc{font-size:16px;color:#555;margin-bottom:20px}
+.price{font-size:20px;font-weight:600;margin-bottom:20px}
+.price del{color:#888;margin-right:10px}
+.discounted-price{color:#2a9d8f;font-size:24px;font-weight:900}
+.discount-percent{background:#d1f2eb;color:#2a9d8f;font-weight:700;font-size:14px;padding:4px 6px;border-radius:6px;margin-left:10px}
+.options{margin-bottom:15px}
+.options label{font-weight:600;margin-right:10px}
+.options select,.options input{padding:6px 10px;border-radius:6px;border:1px solid #ccc}
+button{padding:12px 20px;border:none;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer}
+.add-to-cart-btn{background:#2a9d8f;color:#fff;margin-bottom:10px}
+.add-to-cart-btn:hover{background:#21867a}
+.go-to-cart-btn{background:#264653;color:#fff;display:none}
+.go-to-cart-btn:hover{background:#1f3b47}
+</style>
+
+<script
+    src="https://assets.adobedtm.com/21b53c73144b/55224bfc5f5a/launch-6c2cbecd161e-development.min.js"
+    async>
+</script>
+
+</head>
+<body>
+
+<header class="nav">
+  <h1 class="logo">BeautifulStore</h1>
+  <nav class="main-nav">
+    <a href="index.html" class="track-link" data-link-name="Home">Home</a>
+    <a href="plp-men.html" class="track-link" data-link-name="Men">Men</a>
+    <a href="plp-women.html" class="track-link" data-link-name="Women">Women</a>
+    <a href="checkout.html" class="track-link" data-link-name="Cart">Cart</a>
+  </nav>
+</header>
+
+<div class="pdp-container">
+  <div class="pdp-image"><img id="product-img"></div>
+
+  <div class="pdp-details">
+    <h2 class="brand" id="product-brand"></h2>
+    <p class="desc" id="product-desc"></p>
+
+    <div class="price">
+      <del id="product-original-price"></del>
+      <span class="discounted-price" id="product-discounted-price"></span>
+      <span class="discount-percent" id="product-discount-percent"></span>
+    </div>
+
+    <div class="options">
+      <label>Size:</label>
+      <select id="size">
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+        <option>10</option>
+      </select>
+    </div>
+
+    <div class="options">
+      <label>Color:</label>
+      <select id="color">
+        <option>Red</option>
+        <option>Blue</option>
+        <option>Black</option>
+      </select>
+    </div>
+
+    <div class="options">
+      <label>Qty:</label>
+      <input type="number" id="quantity" value="1" min="1">
+    </div>
+
+    <button class="add-to-cart-btn" id="addToCartBtn">Add to Cart</button>
+    <button class="go-to-cart-btn" id="goToCartBtn">Go to Cart</button>
+  </div>
+</div>
+
+<script>
+
+const products = {
+
+  // Men products
+  'adidas-runfalcon': {
+    sku:'M111',
+    brand:'adidas',
+    desc:'RUNFALCON 5 Running Shoes',
+    img:'https://images.unsplash.com/photo-1593032465172-c8b90c9b9992',
+    originalPrice:4025,
+    discountedPrice:2450
+  },
+
+  'nike-sneakers': {
+    sku:'M112',
+    brand:'nike',
+    desc:'Casual White Sneakers',
+    img:'https://images.unsplash.com/photo-1595950655135-2e4b907bf2a3',
+    originalPrice:3600,
+    discountedPrice:2700
+  },
+
+  'timberland-boots': {
+    sku:'M113',
+    brand:'timberland',
+    desc:'Leather Boots Brown',
+    img:'https://images.unsplash.com/photo-1581622172521-d3b145124165',
+    originalPrice:6800,
+    discountedPrice:5400
+  },
+
+  'puma-running': {
+    sku:'M114',
+    brand:'puma',
+    desc:'Running Sneakers Blue',
+    img:'https://images.unsplash.com/photo-1600185364271-81e331d3ccf2',
+    originalPrice:4100,
+    discountedPrice:3200
+  },
+
+  'skechers-slipon': {
+    sku:'M115',
+    brand:'skechers',
+    desc:'Slip-On Shoes Black',
+    img:'https://images.unsplash.com/photo-1542068829-1115f7259450',
+    originalPrice:3200,
+    discountedPrice:2400
+  },
+
+  'newbalance-trail': {
+    sku:'M116',
+    brand:'new balance',
+    desc:'Trail Running Shoes Grey',
+    img:'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c',
+    originalPrice:3500,
+    discountedPrice:2800
+  },
+
+  // Women products
+  'women-nike-air': {
+    sku:'W123',
+    brand:'nike',
+    desc:'Women Air Max Pink',
+    img:'https://source.unsplash.com/600x600/?women,nike,shoes',
+    originalPrice:5000,
+    discountedPrice:4000
+  },
+
+  'women-adidas-run': {
+    sku:'W124',
+    brand:'adidas',
+    desc:'Women Running Shoes Purple',
+    img:'https://source.unsplash.com/600x600/?women,adidas,running-shoes',
+    originalPrice:4500,
+    discountedPrice:3500
+  },
+
+  'women-puma-casual': {
+    sku:'W125',
+    brand:'puma',
+    desc:'Women Casual Sneakers White',
+    img:'https://source.unsplash.com/600x600/?women,puma,sneakers',
+    originalPrice:4200,
+    discountedPrice:3100
+  },
+
+  'women-nike-air2': {
+    sku:'W126',
+    brand:'nike',
+    desc:'Women Air Max Sport',
+    img:'https://source.unsplash.com/600x600/?women,nike,running-shoes',
+    originalPrice:5200,
+    discountedPrice:4100
+  },
+
+  'women-adidas-train': {
+    sku:'W127',
+    brand:'adidas',
+    desc:'Women Training Shoes',
+    img:'https://source.unsplash.com/600x600/?women,adidas,training-shoes',
+    originalPrice:4800,
+    discountedPrice:3600
+  },
+
+  'women-puma-casual2': {
+    sku:'W128',
+    brand:'puma',
+    desc:'Women Everyday Sneakers',
+    img:'https://source.unsplash.com/600x600/?women,casual-shoes',
+    originalPrice:4000,
+    discountedPrice:3000
+  }
+};
+
+
+const productKey =
+  new URLSearchParams(window.location.search).get('product');
+
+const product = products[productKey];
+
+if(!product){
+  alert('Product not found');
+  location.href='index.html';
+}
+
+
+const discountPercent =
+  Math.round(
+    ((product.originalPrice - product.discountedPrice) /
+    product.originalPrice) * 100
+  );
+
+
+document.getElementById('product-img').src = product.img;
+
+document.getElementById('product-brand').textContent =
+  product.brand;
+
+document.getElementById('product-desc').textContent =
+  product.desc;
+
+document.getElementById('product-original-price').textContent =
+  '₹' + product.originalPrice;
+
+document.getElementById('product-discounted-price').textContent =
+  '₹' + product.discountedPrice;
+
+document.getElementById('product-discount-percent').textContent =
+  discountPercent + '% off';
+
+
+/* =========================================================
+   LOGIN STATE
+   Same key used on homepage + PLP
+   ========================================================= */
+
+const LOGGED_IN_USER_KEY = "beautifulStore_loggedInUser";
+
+
+function getLoggedInUser(){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem(LOGGED_IN_USER_KEY)
+    );
+
+  }catch(error){
+
+    return null;
+
+  }
+
+}
+
+
+/* =========================================================
+   CUSTOMER DATA
+   Guest:
+   customerID = NA
+   loginStatus = guest
+
+   Logged-in:
+   customerID = email
+   loginStatus = logged-in
+   ========================================================= */
+
+function getCustomerData(){
+
+  const user = getLoggedInUser();
+
+  if(!user){
+
+    return {
+      customerID:"NA",
+      loginStatus:"guest"
+    };
+
+  }
+
+  return {
+    emailId:user.email,
+    loginStatus:"logged-in"
+  };
+
+}
+
+
+/* =========================================================
+   ADOBE DATA LAYER
+   ========================================================= */
+
+window.adobeDataLayer =
+  window.adobeDataLayer || [];
+
+
+/* =========================================================
+   PRODUCT DATA HELPER
+   ========================================================= */
+
+function getProductData(){
+
+  return {
+    SKU: product.sku,
+    name: product.desc,
+    priceTotal: product.discountedPrice,
+    discountPercent: discountPercent,
+    quantity: parseInt(
+      document.getElementById('quantity').value
+    ) || 1,
+    size: document.getElementById('size').value,
+    color: document.getElementById('color').value
+  };
+
+}
+
+
+/* =========================================================
+   PAGE LOAD EVENT
+   ========================================================= */
+
+function pushPageLoadDL(){
+
+  window.adobeDataLayer.push({
+
+    event:'pageLoaded',
+
+    xdmPageLoad:{
+
+      web:{
+        webPageDetails:{
+          pageName:'PDP',
+          pageType:'PDP',
+          brand:'BeautifulStore'
+        }
+      },
+
+      custData:getCustomerData(),
+
+      eventInfo:{
+        eventName:"pageLoad"
+      },
+
+      commerce:{
+        productListItems:[
+          getProductData()
+        ]
+      }
+
+    }
+
+  });
+
+}
+
+pushPageLoadDL();
+
+
+/* =========================================================
+   HEADER CLICKS
+   ========================================================= */
+
+document.querySelectorAll('.track-link').forEach(link=>{
+
+  link.addEventListener('click', e=>{
+
+    window.adobeDataLayer.push({
+
+      event:'linkClicked',
+
+      xdmActionDetails:{
+
+        web:{
+          webInteraction:{
+            linkName:e.currentTarget.dataset.linkName,
+            linkPageName:'PDP',
+            brand:'BeautifulStore'
+          }
+        },
+
+        custData:getCustomerData(),
+
+        eventInfo:{
+          eventName:"linkClick"
+        }
+
+      }
+
+    });
+
+  });
+
+});
+
+
+/* =========================================================
+   OPTION CHANGES
+   ========================================================= */
+
+function optionChanged(type, value){
+
+  window.adobeDataLayer.push({
+
+    event:'linkClicked',
+
+    xdmActionDetails:{
+
+      web:{
+        webInteraction:{
+          linkName:type + ' Changed : ' + value,
+          linkPageName:'PDP',
+          brand:'BeautifulStore'
+        }
+      },
+
+      commerce:{
+        productListItems:[
+          getProductData()
+        ]
+      },
+
+      custData:getCustomerData(),
+
+      eventInfo:{
+        eventName:"linkClick"
+      }
+
+    }
+
+  });
+
+}
+
+
+document.getElementById('size')
+  .addEventListener('change', e=>{
+    optionChanged('Size', e.target.value);
+  });
+
+
+document.getElementById('color')
+  .addEventListener('change', e=>{
+    optionChanged('Color', e.target.value);
+  });
+
+
+document.getElementById('quantity')
+  .addEventListener('change', e=>{
+    optionChanged('Quantity', e.target.value);
+  });
+
+
+/* =========================================================
+   ADD TO CART
+   ========================================================= */
+
+document.getElementById('addToCartBtn')
+  .addEventListener('click', function(){
+
+    const qty =
+      parseInt(
+        document.getElementById('quantity').value
+      ) || 1;
+
+    const size =
+      document.getElementById('size').value;
+
+    const color =
+      document.getElementById('color').value;
+
+
+    /* -----------------------------------------
+       EXISTING CART LOGIC
+       ----------------------------------------- */
+
+    const cart =
+      JSON.parse(localStorage.getItem('cart')) || [];
+
+    cart.push({
+
+      productID:product.sku,
+      productName:product.desc,
+      brand:product.brand,
+      price:product.discountedPrice,
+      discountPercent:discountPercent,
+      qty:qty,
+      size:size,
+      color:color
+
+    });
+
+    localStorage.setItem(
+      'cart',
+      JSON.stringify(cart)
+    );
+
+
+    document.getElementById('goToCartBtn')
+      .style.display='inline-block';
+
+    alert('Added to cart');
+
+
+    /* -----------------------------------------
+       ADOBE ADD TO CART EVENT
+       ----------------------------------------- */
+
+    window.adobeDataLayer.push({
+
+      event:'linkClicked',
+
+      xdmActionDetails:{
+
+        web:{
+
+          webInteraction:{
+            linkName:'Add to Cart',
+            linkPageName:'PDP',
+            brand:'BeautifulStore'
+          }
+
+        },
+
+        commerce:{
+
+          /*
+           * Important for Cart Abandonment POC
+           */
+          productListAdds:1,
+
+          productListItems:[{
+
+            SKU:product.sku,
+            name:product.desc,
+            priceTotal:product.discountedPrice,
+            discountPercent:discountPercent,
+            quantity:qty,
+            size:size,
+            color:color
+
+          }]
+
+        },
+
+        custData:getCustomerData(),
+
+        eventInfo:{
+          eventName:"addToCart"
+        }
+
+      }
+
+    });
+
+  });
+
+
+/* =========================================================
+   GO TO CART
+   ========================================================= */
+
+document.getElementById('goToCartBtn')
+  .addEventListener('click', function(){
+
+    const qty =
+      parseInt(
+        document.getElementById('quantity').value
+      ) || 1;
+
+    const size =
+      document.getElementById('size').value;
+
+    const color =
+      document.getElementById('color').value;
+
+
+    window.adobeDataLayer.push({
+
+      event:'linkClicked',
+
+      xdmActionDetails:{
+
+        custData:getCustomerData(),
+
+        web:{
+
+          webInteraction:{
+            linkName:'Go To Cart',
+            linkPageName:'PDP',
+            brand:'BeautifulStore'
+          }
+
+        },
+
+        commerce:{
+
+          productListItems:[{
+
+            SKU:product.sku,
+            name:product.desc,
+            priceTotal:product.discountedPrice,
+            discountPercent:discountPercent,
+            quantity:qty,
+            size:size,
+            color:color
+
+          }]
+
+        },
+
+        eventInfo:{
+          eventName:"cartClick"
+        }
+
+      }
+
+    });
+
+
+    window.location.href='checkout.html';
+
+  });
+
+</script>
+
+</body>
+</html>
+

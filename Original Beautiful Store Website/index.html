@@ -1,0 +1,2017 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beautiful Store</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ============================================================
+     HERO SECTION
+     EXISTING CODE
+     ============================================================ -->
+
+<section class="hero">
+
+  <header class="nav">
+
+    <h2 class="logo">BeautifulStore</h2>
+
+    <nav class="main-nav">
+
+      <a
+        href="plp-men.html"
+        class="track-link"
+        data-link-name="Men">
+        Men
+      </a>
+
+      <a
+        href="plp-women.html"
+        class="track-link"
+        data-link-name="Women">
+        Women
+      </a>
+
+      <a
+        href="checkout.html"
+        class="track-link"
+        data-link-name="Cart">
+        Cart
+      </a>
+
+      <!-- ======================================================
+           LOGIN / USER AREA
+           NEW
+           ====================================================== -->
+
+      <span id="auth-area">
+
+        <button
+          id="login-btn"
+          type="button">
+          Login
+        </button>
+
+      </span>
+
+    </nav>
+
+
+    <!-- ========================================================
+         ADOBE LAUNCH
+         EXISTING CODE - UNCHANGED
+         ======================================================== -->
+
+    <script
+      src="https://assets.adobedtm.com/21b53c73144b/55224bfc5f5a/launch-6c2cbecd161e-development.min.js"
+      async>
+    </script>
+
+  </header>
+
+
+  <div class="hero-content">
+
+    <h1>Style That Speaks.</h1>
+
+    <p>
+      Premium fashion & lifestyle products at unbeatable prices.
+    </p>
+
+    <div class="cta-group">
+
+      <a
+        href="plp-men.html"
+        class="btn primary track-link"
+        data-link-name="Shop Men">
+        Shop Men
+      </a>
+
+      <a
+        href="plp-women.html"
+        class="btn secondary track-link"
+        data-link-name="Shop Women">
+        Shop Women
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ============================================================
+     FEATURED COLLECTIONS
+     EXISTING CODE
+     ============================================================ -->
+
+<section class="section" id="collections">
+
+  <h2>Featured Collections</h2>
+
+  <div class="grid">
+
+    <div
+      class="category-card men"
+      style="background:url('https://images.unsplash.com/photo-1600180758895-47a45c1c1d90?auto=format&fit=crop&w=600&q=80')">
+
+      <div class="overlay">
+
+        <h3>Men's Wear</h3>
+
+        <p>Modern & Stylish</p>
+
+        <a
+          href="plp-men.html"
+          class="btn track-link"
+          data-link-name="Shop Men Collection">
+          Shop Men
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="category-card women"
+      style="background:url('https://images.unsplash.com/photo-1520975698519-59c06db0b6d9?auto=format&fit=crop&w=600&q=80')">
+
+      <div class="overlay">
+
+        <h3>Women's Wear</h3>
+
+        <p>Elegant & Trendy</p>
+
+        <a
+          href="plp-women.html"
+          class="btn track-link"
+          data-link-name="Shop Women Collection">
+          Shop Women
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="category-card footwear"
+      style="background:url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80')">
+
+      <div class="overlay">
+
+        <h3>Footwear</h3>
+
+        <p>Comfort & Performance</p>
+
+        <a
+          href="plp-footwear.html"
+          class="btn track-link"
+          data-link-name="Shop Footwear Collection">
+          Shop Shoes
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ============================================================
+     PROMO BANNER
+     EXISTING CODE
+     ============================================================ -->
+
+<section class="promo">
+
+  <h2>🔥 Flat 20% OFF</h2>
+
+  <p>
+    Use coupon <strong>SAVE20</strong> at checkout
+  </p>
+
+  <a
+    href="plp-men.html"
+    class="btn primary track-link"
+    data-link-name="Promo Banner CTA">
+    Grab the Deal
+  </a>
+
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+     EXISTING CODE
+     ============================================================ -->
+
+<footer>
+
+  <p>
+    © 2026 BeautifulStore. All Rights Reserved.
+  </p>
+
+</footer>
+
+
+<!-- ============================================================
+     LOGIN / SIGNUP MODAL
+     NEW CODE
+     ============================================================ -->
+
+<div
+  id="auth-modal"
+  class="auth-modal"
+  style="display:none;">
+
+  <div class="auth-box">
+
+
+    <!-- CLOSE -->
+
+    <button
+      id="auth-close"
+      type="button"
+      class="auth-close">
+
+      &times;
+
+    </button>
+
+
+    <!-- ========================================================
+         LOGIN FORM
+         ======================================================== -->
+
+    <div id="login-form-container">
+
+      <h2>Welcome Back</h2>
+
+      <p class="auth-subtitle">
+        Login to your BeautifulStore account
+      </p>
+
+
+      <form id="login-form">
+
+
+        <div class="auth-field">
+
+          <label for="login-email">
+            Email
+          </label>
+
+          <input
+            type="email"
+            id="login-email"
+            placeholder="Enter your email"
+            required>
+
+        </div>
+
+
+        <div class="auth-field">
+
+          <label for="login-password">
+            Password
+          </label>
+
+          <input
+            type="password"
+            id="login-password"
+            placeholder="Enter your password"
+            required>
+
+        </div>
+
+
+        <p
+          id="login-error"
+          class="auth-error">
+        </p>
+
+
+        <button
+          type="submit"
+          class="auth-submit">
+
+          Login
+
+        </button>
+
+      </form>
+
+
+      <p class="auth-switch">
+
+        Don't have an account?
+
+        <button
+          id="show-signup"
+          type="button">
+
+          Sign Up
+
+        </button>
+
+      </p>
+
+    </div>
+
+
+    <!-- ========================================================
+         SIGNUP FORM
+         ======================================================== -->
+
+    <div
+      id="signup-form-container"
+      style="display:none;">
+
+      <h2>Create Account</h2>
+
+      <p class="auth-subtitle">
+        Join BeautifulStore
+      </p>
+
+
+      <form id="signup-form">
+
+
+        <div class="auth-field">
+
+          <label for="signup-name">
+            Name
+          </label>
+
+          <input
+            type="text"
+            id="signup-name"
+            placeholder="Enter your name"
+            required>
+
+        </div>
+
+
+        <div class="auth-field">
+
+          <label for="signup-email">
+            Email
+          </label>
+
+          <input
+            type="email"
+            id="signup-email"
+            placeholder="Enter your email"
+            required>
+
+        </div>
+
+
+        <div class="auth-field">
+
+          <label for="signup-password">
+            Password
+          </label>
+
+          <input
+            type="password"
+            id="signup-password"
+            placeholder="Create a password"
+            required>
+
+        </div>
+
+
+        <div class="auth-field">
+
+          <label for="signup-confirm-password">
+            Confirm Password
+          </label>
+
+          <input
+            type="password"
+            id="signup-confirm-password"
+            placeholder="Confirm your password"
+            required>
+
+        </div>
+
+
+        <p
+          id="signup-error"
+          class="auth-error">
+        </p>
+
+
+        <button
+          type="submit"
+          class="auth-submit">
+
+          Create Account
+
+        </button>
+
+      </form>
+
+
+      <p class="auth-switch">
+
+        Already have an account?
+
+        <button
+          id="show-login"
+          type="button">
+
+          Login
+
+        </button>
+
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ============================================================
+     LOGIN / SIGNUP CSS
+     NEW CODE ONLY
+     ============================================================ -->
+
+<style>
+
+.auth-modal {
+
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.65);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  z-index: 99999;
+
+  padding: 20px;
+
+}
+
+
+.auth-box {
+
+  width: 100%;
+
+  max-width: 420px;
+
+  background: #ffffff;
+
+  border-radius: 14px;
+
+  padding: 32px;
+
+  position: relative;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+
+  box-sizing: border-box;
+
+}
+
+
+.auth-close {
+
+  position: absolute;
+
+  right: 15px;
+
+  top: 10px;
+
+  border: none;
+
+  background: transparent;
+
+  font-size: 30px;
+
+  cursor: pointer;
+
+  line-height: 1;
+
+}
+
+
+.auth-box h2 {
+
+  margin: 0 0 8px;
+
+  text-align: center;
+
+}
+
+
+.auth-subtitle {
+
+  text-align: center;
+
+  margin: 0 0 25px;
+
+  color: #666;
+
+  font-size: 14px;
+
+}
+
+
+.auth-field {
+
+  margin-bottom: 16px;
+
+}
+
+
+.auth-field label {
+
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+}
+
+
+.auth-field input {
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 12px 14px;
+
+  border: 1px solid #d5d5d5;
+
+  border-radius: 8px;
+
+  font-size: 15px;
+
+  outline: none;
+
+}
+
+
+.auth-field input:focus {
+
+  border-color: #222;
+
+}
+
+
+.auth-submit {
+
+  width: 100%;
+
+  border: none;
+
+  border-radius: 8px;
+
+  padding: 13px;
+
+  background: #111;
+
+  color: #fff;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+}
+
+
+.auth-submit:hover {
+
+  opacity: 0.9;
+
+}
+
+
+.auth-switch {
+
+  text-align: center;
+
+  margin-top: 20px;
+
+  font-size: 14px;
+
+}
+
+
+.auth-switch button {
+
+  border: none;
+
+  background: transparent;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  text-decoration: underline;
+
+}
+
+
+.auth-error {
+
+  color: #d32f2f;
+
+  font-size: 13px;
+
+  min-height: 18px;
+
+  margin: 4px 0 10px;
+
+}
+
+
+#login-btn {
+
+  border: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  font-size: inherit;
+
+  font-family: inherit;
+
+  padding: 0;
+
+  margin-left: 18px;
+
+}
+
+
+.user-menu {
+
+  position: relative;
+
+  display: inline-block;
+
+  margin-left: 18px;
+
+}
+
+
+.user-menu-button {
+
+  border: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  font-size: inherit;
+
+  font-family: inherit;
+
+}
+
+
+.user-dropdown {
+
+  position: absolute;
+
+  right: 0;
+
+  top: calc(100% + 10px);
+
+  min-width: 210px;
+
+  background: #fff;
+
+  border-radius: 10px;
+
+  padding: 14px;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+
+  z-index: 100000;
+
+}
+
+
+.user-dropdown-name {
+
+  font-weight: 600;
+
+  margin-bottom: 4px;
+
+}
+
+
+.user-dropdown-email {
+
+  font-size: 12px;
+
+  color: #666;
+
+  margin-bottom: 12px;
+
+  word-break: break-word;
+
+}
+
+
+.logout-button {
+
+  width: 100%;
+
+  border: none;
+
+  border-radius: 7px;
+
+  padding: 9px;
+
+  cursor: pointer;
+
+  background: #111;
+
+  color: #fff;
+
+}
+
+
+@media (max-width: 600px) {
+
+  .auth-box {
+
+    padding: 25px 20px;
+
+  }
+
+}
+
+</style>
+
+
+<!-- ============================================================
+     ADOBE WEB SDK DATA LAYER
+     UPDATED FOR LOGIN STATE
+     ============================================================ -->
+
+<script>
+
+(function () {
+
+  "use strict";
+
+
+  /* ============================================================
+     INITIALIZE ADOBE DATA LAYER
+     ============================================================ */
+
+  window.adobeDataLayer =
+    window.adobeDataLayer || [];
+
+
+  /* ============================================================
+     STORAGE KEY
+     ============================================================ */
+
+  const LOGGED_IN_USER_KEY =
+    "beautifulStore_loggedInUser";
+
+
+  /* ============================================================
+     GET CURRENT USER
+     ============================================================ */
+
+  function getLoggedInUser() {
+
+    try {
+
+      return JSON.parse(
+        localStorage.getItem(LOGGED_IN_USER_KEY)
+      );
+
+    } catch (error) {
+
+      return null;
+
+    }
+
+  }
+
+
+  /* ============================================================
+     GET CUSTOMER DATA
+     ============================================================ */
+
+  function getCustomerData() {
+
+    const user = getLoggedInUser();
+
+
+    /*
+     * GUEST USER
+     */
+
+    if (!user) {
+
+      return {
+
+        customerID: "NA",
+
+        loginStatus: "guest"
+
+      };
+
+    }
+
+
+    /*
+     * LOGGED-IN USER
+     */
+
+    return {
+
+      emailId: user.email,
+
+      loginStatus: "logged-in"
+
+    };
+
+  }
+
+
+  /* ============================================================
+     GET IDENTITY MAP
+     ============================================================ */
+
+  function getIdentityMap() {
+
+    const user = getLoggedInUser();
+
+
+    /*
+     * No identity for guest
+     */
+
+    if (!user) {
+
+      return null;
+
+    }
+
+
+    /*
+     * Email identity for logged-in user
+     */
+
+    return {
+
+      Email: [
+
+        {
+
+          id: user.email,
+
+          authenticatedState: "authenticated",
+
+          primary: true
+
+        }
+
+      ]
+
+    };
+
+  }
+
+
+  /* ============================================================
+     PAGE LOAD
+     ============================================================ */
+
+  const pageLoadData = {
+
+    event: "pageLoaded",
+
+    xdmPageLoad: {
+
+      web: {
+
+        webPageDetails: {
+
+          pageName: "BeautifulStore Home",
+
+          pageType: "Home",
+
+          brand: "BeautifulStore"
+
+        }
+
+      },
+
+
+      custData: getCustomerData(),
+
+
+      eventInfo: {
+
+        eventName: "pageLoad"
+
+      }
+
+    }
+
+  };
+
+
+  const pageLoadIdentity =
+    getIdentityMap();
+
+
+  if (pageLoadIdentity) {
+
+    pageLoadData.xdmPageLoad.identityMap =
+      pageLoadIdentity;
+
+  }
+
+
+  window.adobeDataLayer.push(
+    pageLoadData
+  );
+
+
+  /* ============================================================
+     LINK CLICK TRACKING
+     ============================================================ */
+
+  document
+    .querySelectorAll(".track-link")
+    .forEach(function (link) {
+
+      link.addEventListener(
+        "click",
+        function (e) {
+
+          const linkName =
+            e.currentTarget.dataset.linkName ||
+            "Unknown CTA";
+
+
+          const linkData = {
+
+            event: "linkClicked",
+
+            xdmActionDetails: {
+
+              web: {
+
+                webInteraction: {
+
+                  linkName: linkName,
+
+                  brand: "BeautifulStore",
+
+                  linkPageName:
+                    "BeautifulStore Home"
+
+                }
+
+              },
+
+
+              custData:
+                getCustomerData(),
+
+
+              eventInfo: {
+
+                eventName: "linkClick"
+
+              }
+
+            }
+
+          };
+
+
+          const identity =
+            getIdentityMap();
+
+
+          if (identity) {
+
+            linkData
+              .xdmActionDetails
+              .identityMap = identity;
+
+          }
+
+
+          window.adobeDataLayer.push(
+            linkData
+          );
+
+        }
+
+      );
+
+    });
+
+
+  /* ============================================================
+     LOGIN POPUP OPEN
+     ============================================================ */
+
+  window.beautifulStoreLoginFormOpened =
+    function () {
+
+      window.adobeDataLayer.push({
+
+        event: "loginFormOpened",
+
+        xdmActionDetails: {
+
+          custData: {
+
+            customerID: "NA",
+
+            loginStatus: "guest"
+
+          },
+
+
+          eventInfo: {
+
+            eventName:
+              "loginFormOpened"
+
+          }
+
+        }
+
+      });
+
+    };
+
+
+  /* ============================================================
+     LOGIN SUCCESS
+     ============================================================ */
+
+  window.beautifulStoreLoginCompleted =
+    function (user) {
+
+      window.adobeDataLayer.push({
+
+        event: "loginCompleted",
+
+        xdmActionDetails: {
+
+          custData: {
+
+            customerID:
+              user.email,
+
+            loginStatus:
+              "logged-in"
+
+          },
+
+
+          identityMap: {
+
+            Email: [
+
+              {
+
+                id: user.email,
+
+                authenticatedState:
+                  "authenticated",
+
+                primary: true
+
+              }
+
+            ]
+
+          },
+
+
+          eventInfo: {
+
+            eventName: "login"
+
+          }
+
+        }
+
+      });
+
+    };
+
+
+  /* ============================================================
+     SIGNUP SUCCESS
+     ============================================================ */
+
+  window.beautifulStoreSignupCompleted =
+    function (user) {
+
+      window.adobeDataLayer.push({
+
+        event: "signUpCompleted",
+
+        xdmActionDetails: {
+
+          custData: {
+
+            customerID:
+              user.email,
+
+            loginStatus:
+              "logged-in"
+
+          },
+
+
+          identityMap: {
+
+            Email: [
+
+              {
+
+                id: user.email,
+
+                authenticatedState:
+                  "authenticated",
+
+                primary: true
+
+              }
+
+            ]
+
+          },
+
+
+          eventInfo: {
+
+            eventName:
+              "signUp"
+
+          }
+
+        }
+
+      });
+
+    };
+
+
+  /* ============================================================
+     LOGOUT
+     ============================================================ */
+
+  window.beautifulStoreLogout =
+    function () {
+
+      window.adobeDataLayer.push({
+
+        event: "logout",
+
+        xdmActionDetails: {
+
+          custData: {
+
+            customerID: "NA",
+
+            loginStatus: "guest"
+
+          },
+
+
+          eventInfo: {
+
+            eventName: "logout"
+
+          }
+
+        }
+
+      });
+
+    };
+
+
+})();
+
+</script>
+
+
+<!-- ============================================================
+     LOGIN / SIGNUP FUNCTIONALITY
+     ============================================================ -->
+
+<script>
+
+(function () {
+
+  "use strict";
+
+
+  /* ============================================================
+     STORAGE KEYS
+     ============================================================ */
+
+  const USERS_STORAGE_KEY =
+    "beautifulStore_users";
+
+
+  const LOGGED_IN_USER_KEY =
+    "beautifulStore_loggedInUser";
+
+
+  /* ============================================================
+     ELEMENTS
+     ============================================================ */
+
+  const authModal =
+    document.getElementById("auth-modal");
+
+
+  const loginBtn =
+    document.getElementById("login-btn");
+
+
+  const authClose =
+    document.getElementById("auth-close");
+
+
+  const loginFormContainer =
+    document.getElementById(
+      "login-form-container"
+    );
+
+
+  const signupFormContainer =
+    document.getElementById(
+      "signup-form-container"
+    );
+
+
+  const loginForm =
+    document.getElementById("login-form");
+
+
+  const signupForm =
+    document.getElementById("signup-form");
+
+
+  const showSignup =
+    document.getElementById("show-signup");
+
+
+  const showLogin =
+    document.getElementById("show-login");
+
+
+  const loginError =
+    document.getElementById("login-error");
+
+
+  const signupError =
+    document.getElementById("signup-error");
+
+
+  const authArea =
+    document.getElementById("auth-area");
+
+
+  /* ============================================================
+     GET USERS
+     ============================================================ */
+
+  function getUsers() {
+
+    try {
+
+      return JSON.parse(
+        localStorage.getItem(
+          USERS_STORAGE_KEY
+        )
+      ) || [];
+
+    } catch (error) {
+
+      return [];
+
+    }
+
+  }
+
+
+  /* ============================================================
+     SAVE USERS
+     ============================================================ */
+
+  function saveUsers(users) {
+
+    localStorage.setItem(
+
+      USERS_STORAGE_KEY,
+
+      JSON.stringify(users)
+
+    );
+
+  }
+
+
+  /* ============================================================
+     GET LOGGED-IN USER
+     ============================================================ */
+
+  function getLoggedInUser() {
+
+    try {
+
+      return JSON.parse(
+        localStorage.getItem(
+          LOGGED_IN_USER_KEY
+        )
+      );
+
+    } catch (error) {
+
+      return null;
+
+    }
+
+  }
+
+
+  /* ============================================================
+     OPEN LOGIN
+     ============================================================ */
+
+  function openLogin() {
+
+    authModal.style.display = "flex";
+
+
+    loginFormContainer.style.display =
+      "block";
+
+
+    signupFormContainer.style.display =
+      "none";
+
+
+    loginError.textContent = "";
+
+    signupError.textContent = "";
+
+
+    /*
+     * Adobe Data Layer
+     */
+
+    if (
+      typeof window
+        .beautifulStoreLoginFormOpened ===
+      "function"
+    ) {
+
+      window.beautifulStoreLoginFormOpened();
+
+    }
+
+  }
+
+
+  /* ============================================================
+     OPEN SIGNUP
+     ============================================================ */
+
+  function openSignup() {
+
+    authModal.style.display = "flex";
+
+
+    loginFormContainer.style.display =
+      "none";
+
+
+    signupFormContainer.style.display =
+      "block";
+
+
+    loginError.textContent = "";
+
+    signupError.textContent = "";
+
+  }
+
+
+  /* ============================================================
+     CLOSE MODAL
+     ============================================================ */
+
+  function closeModal() {
+
+    authModal.style.display = "none";
+
+  }
+
+
+  /* ============================================================
+     ESCAPE HTML
+     ============================================================ */
+
+  function escapeHTML(value) {
+
+    return String(value)
+
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+
+      .replace(
+        /</g,
+        "&lt;"
+      )
+
+      .replace(
+        />/g,
+        "&gt;"
+      )
+
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+
+      .replace(
+        /'/g,
+        "&#039;"
+      );
+
+  }
+
+
+  /* ============================================================
+     UPDATE HEADER
+     ============================================================ */
+
+  function updateHeader() {
+
+    const user =
+      getLoggedInUser();
+
+
+    /*
+     * GUEST
+     */
+
+    if (!user) {
+
+      authArea.innerHTML = `
+
+        <button
+          id="login-btn"
+          type="button">
+
+          Login
+
+        </button>
+
+      `;
+
+
+      document
+        .getElementById("login-btn")
+        .addEventListener(
+          "click",
+          openLogin
+        );
+
+
+      return;
+
+    }
+
+
+    /*
+     * LOGGED-IN
+     */
+
+    authArea.innerHTML = `
+
+      <div class="user-menu">
+
+        <button
+          type="button"
+          class="user-menu-button"
+          id="user-menu-button">
+
+          Hi, ${escapeHTML(user.name)} ▼
+
+        </button>
+
+
+        <div
+          class="user-dropdown"
+          id="user-dropdown"
+          style="display:none;">
+
+          <div class="user-dropdown-name">
+
+            ${escapeHTML(user.name)}
+
+          </div>
+
+
+          <div class="user-dropdown-email">
+
+            ${escapeHTML(user.email)}
+
+          </div>
+
+
+          <button
+            type="button"
+            class="logout-button"
+            id="logout-button">
+
+            Logout
+
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    const userMenuButton =
+      document.getElementById(
+        "user-menu-button"
+      );
+
+
+    const userDropdown =
+      document.getElementById(
+        "user-dropdown"
+      );
+
+
+    const logoutButton =
+      document.getElementById(
+        "logout-button"
+      );
+
+
+    userMenuButton.addEventListener(
+      "click",
+      function () {
+
+        userDropdown.style.display =
+
+          userDropdown.style.display ===
+          "none"
+
+            ? "block"
+
+            : "none";
+
+      }
+    );
+
+
+    logoutButton.addEventListener(
+      "click",
+      function () {
+
+
+        /*
+         * Adobe logout event BEFORE
+         * removing the stored user.
+         */
+
+        if (
+          typeof window.beautifulStoreLogout ===
+          "function"
+        ) {
+
+          window.beautifulStoreLogout();
+
+        }
+
+
+        localStorage.removeItem(
+          LOGGED_IN_USER_KEY
+        );
+
+
+        userDropdown.style.display =
+          "none";
+
+
+        updateHeader();
+
+      }
+    );
+
+  }
+
+
+  /* ============================================================
+     LOGIN
+     ============================================================ */
+
+  loginForm.addEventListener(
+    "submit",
+    function (event) {
+
+      event.preventDefault();
+
+
+      loginError.textContent = "";
+
+
+      const email =
+        document
+          .getElementById(
+            "login-email"
+          )
+          .value
+          .trim()
+          .toLowerCase();
+
+
+      const password =
+        document
+          .getElementById(
+            "login-password"
+          )
+          .value;
+
+
+      const users =
+        getUsers();
+
+
+      const user =
+        users.find(
+          function (item) {
+
+            return (
+
+              item.email === email &&
+
+              item.password === password
+
+            );
+
+          }
+        );
+
+
+      if (!user) {
+
+        loginError.textContent =
+          "Invalid email or password.";
+
+        return;
+
+      }
+
+
+      /*
+       * Save login state
+       */
+
+      localStorage.setItem(
+
+        LOGGED_IN_USER_KEY,
+
+        JSON.stringify({
+
+          name: user.name,
+
+          email: user.email,
+
+          loginStatus:
+            "logged-in"
+
+        })
+
+      );
+
+
+      /*
+       * Adobe LOGIN EVENT
+       */
+
+      if (
+        typeof window.beautifulStoreLoginCompleted ===
+        "function"
+      ) {
+
+        window.beautifulStoreLoginCompleted({
+
+          name: user.name,
+
+          email: user.email
+
+        });
+
+      }
+
+
+      loginForm.reset();
+
+
+      closeModal();
+
+
+      updateHeader();
+
+    }
+  );
+
+
+  /* ============================================================
+     SIGNUP
+     ============================================================ */
+
+  signupForm.addEventListener(
+    "submit",
+    function (event) {
+
+      event.preventDefault();
+
+
+      signupError.textContent = "";
+
+
+      const name =
+        document
+          .getElementById(
+            "signup-name"
+          )
+          .value
+          .trim();
+
+
+      const email =
+        document
+          .getElementById(
+            "signup-email"
+          )
+          .value
+          .trim()
+          .toLowerCase();
+
+
+      const password =
+        document
+          .getElementById(
+            "signup-password"
+          )
+          .value;
+
+
+      const confirmPassword =
+        document
+          .getElementById(
+            "signup-confirm-password"
+          )
+          .value;
+
+
+      /*
+       * Password validation
+       */
+
+      if (
+        password !==
+        confirmPassword
+      ) {
+
+        signupError.textContent =
+          "Passwords do not match.";
+
+        return;
+
+      }
+
+
+      const users =
+        getUsers();
+
+
+      /*
+       * Existing user
+       */
+
+      const existingUser =
+        users.find(
+          function (item) {
+
+            return item.email === email;
+
+          }
+        );
+
+
+      if (existingUser) {
+
+        signupError.textContent =
+          "An account with this email already exists.";
+
+        return;
+
+      }
+
+
+      /*
+       * Create user
+       */
+
+      const newUser = {
+
+        id:
+          "user_" +
+          Date.now(),
+
+        name:
+          name,
+
+        email:
+          email,
+
+        password:
+          password
+
+      };
+
+
+      users.push(newUser);
+
+
+      saveUsers(users);
+
+
+      /*
+       * Automatically login
+       */
+
+      localStorage.setItem(
+
+        LOGGED_IN_USER_KEY,
+
+        JSON.stringify({
+
+          name:
+            name,
+
+          email:
+            email,
+
+          loginStatus:
+            "logged-in"
+
+        })
+
+      );
+
+
+      /*
+       * Adobe SIGNUP EVENT
+       */
+
+      if (
+        typeof window.beautifulStoreSignupCompleted ===
+        "function"
+      ) {
+
+        window.beautifulStoreSignupCompleted({
+
+          name:
+            name,
+
+          email:
+            email
+
+        });
+
+      }
+
+
+      signupForm.reset();
+
+
+      closeModal();
+
+
+      updateHeader();
+
+    }
+  );
+
+
+  /* ============================================================
+     SHOW LOGIN
+     ============================================================ */
+
+  showLogin.addEventListener(
+    "click",
+    openLogin
+  );
+
+
+  /* ============================================================
+     SHOW SIGNUP
+     ============================================================ */
+
+  showSignup.addEventListener(
+    "click",
+    openSignup
+  );
+
+
+  /* ============================================================
+     CLOSE BUTTON
+     ============================================================ */
+
+  authClose.addEventListener(
+    "click",
+    closeModal
+  );
+
+
+  /* ============================================================
+     CLOSE WHEN CLICKING OUTSIDE
+     ============================================================ */
+
+  authModal.addEventListener(
+    "click",
+    function (event) {
+
+      if (
+        event.target ===
+        authModal
+      ) {
+
+        closeModal();
+
+      }
+
+    }
+  );
+
+
+  /* ============================================================
+     INITIALIZE HEADER
+     ============================================================ */
+
+  updateHeader();
+
+
+})();
+
+</script>
+
+
+</body>
+</html>
+

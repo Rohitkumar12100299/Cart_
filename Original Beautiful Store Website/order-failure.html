@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Failed | BeautifulStore</title>
+
+<style>
+body {
+  margin:0;
+  font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
+  background:#f5f5f5;
+}
+.container {
+  max-width:600px;
+  margin:80px auto;
+  padding:30px;
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 4px 14px rgba(0,0,0,.1);
+  text-align:center;
+}
+h1 {
+  color:#e63946;
+  font-size:36px;
+  margin-bottom:20px;
+}
+p {
+  font-size:18px;
+  color:#555;
+  margin-bottom:30px;
+}
+.btn {
+  display:inline-block;
+  padding:14px 25px;
+  font-size:16px;
+  font-weight:700;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  text-decoration:none;
+}
+.home-btn {
+  background:#2a9d8f;
+  color:#fff;
+}
+.home-btn:hover {
+  background:#21867a;
+}
+.retry-btn {
+  background:#e63946;
+  color:#fff;
+  margin-left:15px;
+}
+.retry-btn:hover {
+  background:#c52836;
+}
+</style>
+
+<script
+  src="https://assets.adobedtm.com/21b53c73144b/55224bfc5f5a/launch-6c2cbecd161e-development.min.js"
+  async>
+</script>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Order Failed</h1>
+
+  <p>
+    Unfortunately, your order could not be processed.
+    Please try again or go back to the homepage.
+  </p>
+
+  <a
+    href="index.html"
+    class="btn home-btn">
+    Go to Home
+  </a>
+
+  <a
+    href="checkout.html"
+    class="btn retry-btn"
+    id="retry-btn">
+    Retry Checkout
+  </a>
+
+</div>
+
+
+<script>
+
+/* ============================================================
+   ADOBE DATA LAYER
+============================================================ */
+
+window.adobeDataLayer =
+  window.adobeDataLayer || [];
+
+
+/* ============================================================
+   GET ORDER INFO
+============================================================ */
+
+const orderInfo =
+  JSON.parse(
+    localStorage.getItem('orderInfo')
+  ) || {};
+
+const cart =
+  orderInfo.cart || [];
+
+const total =
+  Number(orderInfo.total) || 0;
+
+
+/* ============================================================
+   CUSTOMER CONTEXT
+============================================================ */
+
+const LOGGED_IN_USER_KEY =
+  "beautifulStore_loggedInUser";
+
+
+function getLoggedInUser(){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem(
+        LOGGED_IN_USER_KEY
+      )
+    );
+
+  }catch(error){
+
+    return null;
+
+  }
+
+}
+
+
+function getCustomerData(){
+
+  const user =
+    getLoggedInUser();
+
+
+  if(user){
+
+    return {
+
+      customerID:
+        user.email,
+
+      loginStatus:
+        "logged-in"
+
+    };
+
+  }
+
+
+  return {
+
+    customerID:
+      "NA",
+
+    loginStatus:
+      "guest"
+
+  };
+
+}
+
+
+/* ============================================================
+   CART PRODUCT DATA
+============================================================ */
+
+function getCartProductData(item){
+
+  return {
+
+    SKU:
+      item.productID,
+
+    name:
+      item.productName,
+
+    priceTotal:
+      Number(item.price) || 0,
+
+    discountPercent:
+      item.discountPercent || null,
+
+    quantity:
+      Number(item.qty) || 0,
+
+    size:
+      item.size || "-",
+
+    color:
+      item.color || "-"
+
+  };
+
+}
+
+
+/* ============================================================
+   PAGE LOAD – ORDER FAILURE
+============================================================ */
+
+window.adobeDataLayer.push({
+
+  event:"pageLoaded",
+
+  xdmPageLoad:{
+
+    web:{
+
+      webPageDetails:{
+
+        pageName:
+          "Order Failure",
+
+        pageType:
+          "Order Failure",
+
+        brand:
+          "BeautifulStore",
+
+        checkoutStep:
+          "payment"
+
+      }
+
+    },
+
+
+    commerce:{
+
+      order:{
+
+        orderId:
+          orderInfo.orderId || "NA",
+
+        totalAmount:
+          total,
+
+        itemCount:
+          cart.length,
+
+        status:
+          "failed"
+
+      },
+
+      productListItems:
+        cart.map(
+          getCartProductData
+        )
+
+    },
+
+
+    custData:{
+
+      ...getCustomerData(),
+
+      email:
+        orderInfo.email || "NA"
+
+    },
+
+
+    eventInfo:{
+
+      eventName:
+        "orderFailure"
+
+    }
+
+  }
+
+});
+
+
+/* ============================================================
+   RETRY CHECKOUT CLICK
+============================================================ */
+
+document
+  .getElementById('retry-btn')
+  .addEventListener(
+    'click',
+    function(){
+
+      window.adobeDataLayer.push({
+
+        event:"linkClicked",
+
+        xdmActionDetails:{
+
+          web:{
+
+            webInteraction:{
+
+              linkName:
+                "Retry Checkout",
+
+              linkType:
+                "other",
+
+              linkPageName:
+                "Order Failure",
+
+              brand:
+                "BeautifulStore"
+
+            }
+
+          },
+
+
+          commerce:{
+
+            order:{
+
+              totalAmount:
+                total,
+
+              itemCount:
+                cart.length,
+
+              status:
+                "failed"
+
+            },
+
+            productListItems:
+              cart.map(
+                getCartProductData
+              )
+
+          },
+
+
+          custData:
+            getCustomerData(),
+
+
+          eventInfo:{
+
+            eventName:
+              "linkClick"
+
+          }
+
+        }
+
+      });
+
+    }
+  );
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,467 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Men Products | BeautifulStore</title>
+<style>
+body{
+  font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
+  margin:0;
+  background:#f5f5f5;
+  color:#222;
+}
+
+header.nav{
+  background:white;
+  padding:15px 30px;
+  box-shadow:0 2px 8px rgb(0 0 0 / 0.1);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.logo{
+  font-weight:900;
+  font-size:24px;
+  text-transform:lowercase;
+}
+
+nav.main-nav a{
+  margin-left:20px;
+  text-decoration:none;
+  color:#222;
+  font-weight:600;
+}
+
+nav.main-nav a:hover{
+  color:#2a9d8f;
+}
+
+.plp-container{
+  display:flex;
+  flex-wrap:wrap;
+  gap:20px;
+  max-width:1200px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+.product-card{
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 4px 10px rgb(0 0 0 / 10%);
+  overflow:hidden;
+  width:calc(33.33% - 20px);
+  transition:transform .3s, box-shadow .3s;
+}
+
+.product-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 8px 20px rgb(0 0 0 / 15%);
+}
+
+.product-card img{
+  width:100%;
+  height:260px;
+  object-fit:cover;
+}
+
+.product-info{
+  padding:15px;
+  text-align:center;
+}
+
+.product-info h3{
+  margin:5px 0;
+  font-size:18px;
+  text-transform:capitalize;
+}
+
+.product-info p{
+  margin:6px 0;
+  font-size:14px;
+}
+
+.price del{
+  color:#888;
+  margin-right:8px;
+}
+
+.discounted-price{
+  color:#2a9d8f;
+  font-weight:700;
+}
+
+.discount-percent{
+  background:#d1f2eb;
+  color:#2a9d8f;
+  font-size:12px;
+  font-weight:700;
+  padding:2px 6px;
+  border-radius:4px;
+  margin-left:6px;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+@media(max-width:900px){
+  .product-card{width:calc(50% - 20px);}
+}
+
+@media(max-width:600px){
+  .product-card{width:100%;}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <h1 class="logo">BeautifulStore</h1>
+  <nav class="main-nav">
+    <a href="index.html" class="track-link" data-link-name="Home">Home</a>
+    <a href="plp-men.html" class="track-link" data-link-name="Men">Men</a>
+    <a href="plp-women.html" class="track-link" data-link-name="Women">Women</a>
+    <a href="checkout.html" class="track-link" data-link-name="Cart">Cart</a>
+  </nav>
+
+<script
+    src="https://assets.adobedtm.com/21b53c73144b/55224bfc5f5a/launch-6c2cbecd161e-development.min.js"
+    async>
+  </script>
+</header>
+
+<div class="plp-container">
+
+  <!-- Product 1 -->
+  <div class="product-card">
+    <a href="pdp.html?product=adidas-runfalcon"
+       class="product-link"
+       data-product-name="Adidas Runfalcon"
+       data-product-id="M111"
+       data-price="2450"
+       data-quantity="1"
+       data-discount="39">
+      <img src="https://images.unsplash.com/photo-1593032465172-c8b90c9b9992" alt="Adidas Runfalcon">
+      <div class="product-info">
+        <h3>adidas</h3>
+        <p>RUNFALCON 5 Running Shoes</p>
+        <p class="price">
+          <del>₹4025</del>
+          <span class="discounted-price">₹2450</span>
+          <span class="discount-percent">39% off</span>
+        </p>
+      </div>
+    </a>
+  </div>
+
+  <!-- Product 2 -->
+  <div class="product-card">
+    <a href="pdp.html?product=nike-sneakers"
+       class="product-link"
+       data-product-name="Nike Sneakers"
+       data-product-id="M112"
+       data-price="2700"
+       data-quantity="1"
+       data-discount="25">
+      <img src="https://images.unsplash.com/photo-1595950655135-2e4b907bf2a3" alt="Nike Sneakers">
+      <div class="product-info">
+        <h3>nike</h3>
+        <p>Casual White Sneakers</p>
+        <p class="price">
+          <del>₹3600</del>
+          <span class="discounted-price">₹2700</span>
+          <span class="discount-percent">25% off</span>
+        </p>
+      </div>
+    </a>
+  </div>
+
+  <!-- Product 3 -->
+  <div class="product-card">
+    <a href="pdp.html?product=timberland-boots"
+       class="product-link"
+       data-product-name="Timberland Boots"
+       data-product-id="M113"
+       data-price="5400"
+       data-quantity="1"
+       data-discount="21">
+      <img src="https://images.unsplash.com/photo-1581622172521-d3b145124165" alt="Timberland Boots">
+      <div class="product-info">
+        <h3>timberland</h3>
+        <p>Leather Boots Brown</p>
+        <p class="price">
+          <del>₹6800</del>
+          <span class="discounted-price">₹5400</span>
+          <span class="discount-percent">21% off</span>
+        </p>
+      </div>
+    </a>
+  </div>
+
+  <!-- Product 4 -->
+  <div class="product-card">
+    <a href="pdp.html?product=puma-running"
+       class="product-link"
+       data-product-name="Puma Running"
+       data-product-id="M114"
+       data-price="3200"
+       data-quantity="1"
+       data-discount="22">
+      <img src="https://images.unsplash.com/photo-1600185364271-81e331d3ccf2" alt="Puma Running">
+      <div class="product-info">
+        <h3>puma</h3>
+        <p>Running Sneakers Blue</p>
+        <p class="price">
+          <del>₹4100</del>
+          <span class="discounted-price">₹3200</span>
+          <span class="discount-percent">22% off</span>
+        </p>
+      </div>
+    </a>
+  </div>
+
+  <!-- Product 5 -->
+  <div class="product-card">
+    <a href="pdp.html?product=skechers-slipon"
+       class="product-link"
+       data-product-name="Skechers Slipon"
+       data-product-id="M115"
+       data-price="2400"
+       data-quantity="1"
+       data-discount="25">
+      <img src="https://images.unsplash.com/photo-1542068829-1115f7259450" alt="Skechers Slipon">
+      <div class="product-info">
+        <h3>skechers</h3>
+        <p>Slip-On Shoes Black</p>
+        <p class="price">
+          <del>₹3200</del>
+          <span class="discounted-price">₹2400</span>
+          <span class="discount-percent">25% off</span>
+        </p>
+      </div>
+    </a>
+  </div>
+
+  <!-- Product 6 -->
+  <div class="product-card">
+    <a href="pdp.html?product=newbalance-trail"
+       class="product-link"
+       data-product-name="New Balance Trail"
+       data-product-id="M116"
+       data-price="2800"
+       data-quantity="1"
+       data-discount="20">
+      <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c" alt="New Balance Trail">
+      <div class="product-info">
+        <h3>new balance</h3>
+        <p>Trail Running Shoes Grey</p>
+        <p class="price">
+          <del>₹3500</del>
+          <span class="discounted-price">₹2800</span>
+          <span class="discount-percent">20% off</span>
+        </p>
+      </div>
+    </a>
+  </div>
+
+</div>
+
+<script>
+
+/* =========================================================
+   LOGIN STATE
+   Read the same logged-in user created on the homepage.
+   ========================================================= */
+
+const LOGGED_IN_USER_KEY = "beautifulStore_loggedInUser";
+
+function getLoggedInUser() {
+  try {
+    return JSON.parse(localStorage.getItem(LOGGED_IN_USER_KEY));
+  } catch (error) {
+    return null;
+  }
+}
+
+
+/* =========================================================
+   CUSTOMER DATA
+   Guest:
+   customerID = NA
+   loginStatus = guest
+
+   Logged-in:
+   customerID = email
+   loginStatus = logged-in
+   ========================================================= */
+
+function getCustomerData() {
+
+  const user = getLoggedInUser();
+
+  if (!user) {
+    return {
+      customerID: "NA",
+      loginStatus: "guest"
+    };
+  }
+
+  return {
+    customerID: user.email,
+    loginStatus: "logged-in"
+  };
+}
+
+
+/* =========================================================
+   PAGE LOAD EVENT
+   ========================================================= */
+
+window.adobeDataLayer = window.adobeDataLayer || [];
+
+window.adobeDataLayer.push({
+    event: "pageLoaded",
+    xdmPageLoad: {
+      web: {
+        webPageDetails: {
+          pageName: "Men:PLP",
+          pageType:"PLP",
+          brand: "BeautifulStore"
+        }
+      },
+
+      custData: getCustomerData(),
+
+      eventInfo:{
+        eventName:"pageLoad"
+      }
+    }
+  });
+
+
+/* =========================================================
+   HEADER / NAV LINK CLICK TRACKING
+   ========================================================= */
+
+document.querySelectorAll('.track-link').forEach(function(link){
+
+  link.addEventListener('click', function(e){
+
+    const linkName = e.currentTarget.dataset.linkName || "Unknown CTA";
+
+    window.adobeDataLayer.push({
+      event: "linkClicked",
+
+      xdmActionDetails: {
+
+        web: {
+          webInteraction: {
+            linkName: linkName,
+            brand: "BeautifulStore",
+            linkPageName: "Men:PLP"
+          }
+        },
+
+        custData: getCustomerData(),
+
+        eventInfo:{
+          eventName:"linkClick"
+        }
+
+      }
+    });
+
+  });
+
+});
+
+
+/* =========================================================
+   PRODUCT CLICK TRACKING
+   Original price + discounted price + discount %
+   ========================================================= */
+
+document.querySelectorAll('.product-link').forEach(function(link){
+
+  link.addEventListener('click', function(e){
+
+    const productName = e.currentTarget.dataset.productName;
+
+    const productID = e.currentTarget.dataset.productId;
+
+    const discountedPrice =
+      parseFloat(e.currentTarget.dataset.price);
+
+    const originalPrice =
+      parseFloat(
+        e.currentTarget
+          .querySelector('del')
+          .textContent
+          .replace('₹','')
+      ) || discountedPrice;
+
+    const discountPercent =
+      Math.round(
+        ((originalPrice - discountedPrice) / originalPrice) * 100
+      );
+
+    const quantity =
+      parseInt(e.currentTarget.dataset.quantity) || 1;
+
+
+    window.adobeDataLayer.push({
+
+      event: "linkClicked",
+
+      xdmActionDetails: {
+
+        web: {
+
+          webInteraction: {
+            linkName: productName,
+            brand: "BeautifulStore",
+            linkPageName: "Men Products PLP"
+          },
+
+          commerce: {
+
+            product: {
+              SKU: productID,
+              name: productName,
+              originalPrice: originalPrice,
+              color:"Red",
+              priceTotal: discountedPrice,
+              discountPercent: discountPercent,
+              quantity: quantity
+            }
+
+          }
+
+        },
+
+        custData: getCustomerData(),
+
+        eventInfo:{
+          eventName:"productClick"
+        }
+
+      }
+
+    });
+
+  });
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,587 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout | BeautifulStore</title>
+
+<style>
+body{margin:0;font-family:'Segoe UI',Tahoma,Verdana,sans-serif;background:#f5f5f5;}
+.container{max-width:1000px;margin:40px auto;padding:20px;display:grid;grid-template-columns:2fr 1fr;gap:30px;}
+.card{background:#fff;padding:25px;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,.1);}
+h2{margin-top:0}
+input,select{width:100%;padding:12px;margin:8px 0 15px;border-radius:8px;border:1px solid #ccc;}
+.row{display:flex;gap:15px;}
+.summary-row{display:flex;justify-content:space-between;margin:10px 0;}
+.total{font-size:20px;font-weight:900;}
+.place-btn,.fail-btn{width:48%;padding:14px;font-size:16px;font-weight:800;border:none;border-radius:10px;cursor:pointer;}
+.place-btn{background:#2a9d8f;color:#fff;margin-right:4%;}
+.place-btn:hover{background:#21867a}
+.fail-btn{background:#e63946;color:#fff;}
+.fail-btn:hover{background:#c52836}
+.buttons-row{display:flex;justify-content:space-between;}
+@media(max-width:900px){
+  .container{grid-template-columns:1fr;}
+  .buttons-row{flex-direction:column;gap:15px;}
+  .place-btn,.fail-btn{width:100%;margin-right:0;}
+}
+</style>
+
+<script
+  src="https://assets.adobedtm.com/21b53c73144b/55224bfc5f5a/launch-6c2cbecd161e-development.min.js"
+  async>
+</script>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- ADDRESS & PAYMENT -->
+  <div class="card">
+
+    <h2>Shipping Address</h2>
+
+    <input id="name" placeholder="Full Name" required>
+    <input id="phone" placeholder="Phone Number" required>
+    <input id="email" type="email" placeholder="Email Address" required>
+    <input id="street" placeholder="Street Address" required>
+
+    <div class="row">
+      <input id="city" placeholder="City" required>
+      <input id="state" placeholder="State" required>
+    </div>
+
+    <div class="row">
+      <input id="pincode" placeholder="Pincode" required>
+
+      <select id="country">
+        <option>India</option>
+      </select>
+    </div>
+
+    <h2>Payment Method</h2>
+
+    <select id="payment-method">
+      <option>Cash on Delivery</option>
+      <option>UPI</option>
+      <option>Credit / Debit Card</option>
+    </select>
+
+    <div class="buttons-row">
+
+      <button
+        class="place-btn"
+        type="button"
+        id="place-order-btn">
+        Place Order
+      </button>
+
+      <button
+        class="fail-btn"
+        type="button"
+        id="fail-order-btn">
+        Order Failed
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ORDER SUMMARY -->
+  <div class="card">
+
+    <h2>Order Summary</h2>
+
+    <div class="summary-row">
+      <span>Subtotal</span>
+      <span id="subtotal"></span>
+    </div>
+
+    <div class="summary-row">
+      <span>Shipping</span>
+      <span>FREE</span>
+    </div>
+
+    <div class="summary-row total">
+      <span>Total</span>
+      <span id="total"></span>
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* ============================================================
+   CART CALCULATION
+============================================================ */
+
+const cart =
+  JSON.parse(localStorage.getItem('cart')) || [];
+
+let subtotal = cart.reduce(
+  (sum,i) =>
+    sum +
+    (Number(i.price) || 0) *
+    (Number(i.qty) || 0),
+  0
+);
+
+document.getElementById('subtotal').textContent =
+  '₹' + subtotal;
+
+document.getElementById('total').textContent =
+  '₹' + subtotal;
+
+
+/* ============================================================
+   ADOBE DATA LAYER
+============================================================ */
+
+window.adobeDataLayer =
+  window.adobeDataLayer || [];
+
+
+/* ============================================================
+   CUSTOMER CONTEXT
+============================================================ */
+
+const LOGGED_IN_USER_KEY =
+  "beautifulStore_loggedInUser";
+
+function getLoggedInUser(){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem(LOGGED_IN_USER_KEY)
+    );
+
+  }catch(error){
+
+    return null;
+
+  }
+
+}
+
+
+function getCustomerData(){
+
+  const user = getLoggedInUser();
+
+  if(!user){
+
+    return {
+      customerID:"NA",
+      loginStatus:"guest"
+    };
+
+  }
+
+  return {
+    customerID:user.email,
+    loginStatus:"logged-in"
+  };
+
+}
+
+
+/* ============================================================
+   CART PRODUCT DATA
+============================================================ */
+
+function getCartProductData(item){
+
+  return {
+
+    SKU:item.productID,
+
+    name:item.productName,
+
+    priceTotal:
+      Number(item.price) || 0,
+
+    discountPercent:
+      item.discountPercent || null,
+
+    quantity:
+      Number(item.qty) || 0,
+
+    size:
+      item.size || '-',
+
+    color:
+      item.color || '-'
+
+  };
+
+}
+
+
+/* ============================================================
+   PAGE LOAD
+============================================================ */
+
+window.adobeDataLayer.push({
+
+  event:"pageLoaded",
+
+  xdmPageLoad:{
+
+    web:{
+
+      webPageDetails:{
+
+        pageName:"Checkout - Address",
+
+        pageType:"Checkout",
+
+        brand:"BeautifulStore",
+
+        checkoutStep:"address"
+
+      }
+
+    },
+
+    commerce:{
+
+      productListItems:
+        cart.map(getCartProductData)
+
+    },
+
+    custData:
+      getCustomerData(),
+
+    eventInfo:{
+
+      eventName:"pageLoad"
+
+    }
+
+  }
+
+});
+
+
+/* ============================================================
+   PAYMENT METHOD CHANGE
+============================================================ */
+
+document
+  .getElementById('payment-method')
+  .addEventListener(
+    'change',
+    function(e){
+
+      window.adobeDataLayer.push({
+
+        event:"linkClicked",
+
+        xdmActionDetails:{
+
+          web:{
+
+            webInteraction:{
+
+              linkName:
+                "Payment Method Selected",
+
+              brand:
+                "BeautifulStore",
+
+              linkPageName:
+                "Checkout - Address",
+
+              paymentMethod:
+                e.target.value
+
+            }
+
+          },
+
+          custData:
+            getCustomerData(),
+
+          eventInfo:{
+
+            eventName:
+              "paymentMethodSelected"
+
+          }
+
+        }
+
+      });
+
+    }
+  );
+
+
+/* ============================================================
+   PLACE ORDER
+============================================================ */
+
+document
+  .getElementById('place-order-btn')
+  .addEventListener(
+    'click',
+    function(){
+
+      const name =
+        document.getElementById('name')
+        .value.trim();
+
+      const phone =
+        document.getElementById('phone')
+        .value.trim();
+
+      const email =
+        document.getElementById('email')
+        .value.trim();
+
+      const street =
+        document.getElementById('street')
+        .value.trim();
+
+      const city =
+        document.getElementById('city')
+        .value.trim();
+
+      const state =
+        document.getElementById('state')
+        .value.trim();
+
+      const pincode =
+        document.getElementById('pincode')
+        .value.trim();
+
+      const paymentMethod =
+        document.getElementById('payment-method')
+        .value;
+
+
+      /* VALIDATION */
+
+      if(
+        !name ||
+        !phone ||
+        !email ||
+        !street ||
+        !city ||
+        !state ||
+        !pincode
+      ){
+
+        alert(
+          "Please fill all shipping details!"
+        );
+
+        return;
+
+      }
+
+
+      /* PLACE ORDER EVENT */
+
+      window.adobeDataLayer.push({
+
+        event:"linkClicked",
+
+        xdmActionDetails:{
+
+          web:{
+
+            webInteraction:{
+
+              linkName:
+                "Place Order",
+
+              brand:
+                "BeautifulStore",
+
+              linkPageName:
+                "Checkout - Address"
+
+            }
+
+          },
+
+          commerce:{
+
+            order:{
+
+              totalAmount:
+                subtotal,
+
+              paymentMethod:
+                paymentMethod,
+
+              itemCount:
+                cart.length
+
+            },
+
+            productListItems:
+              cart.map(getCartProductData)
+
+          },
+
+          custData:{
+
+            ...getCustomerData(),
+
+            email:email
+
+          },
+
+          eventInfo:{
+
+            eventName:
+              "placeOrder"
+
+          }
+
+        }
+
+      });
+
+
+      /* SAVE ORDER INFO */
+
+      localStorage.setItem(
+        'orderInfo',
+        JSON.stringify({
+
+          name,
+
+          phone,
+
+          email,
+
+          street,
+
+          city,
+
+          state,
+
+          pincode,
+
+          cart,
+
+          total:
+            subtotal,
+
+          paymentMethod
+
+        })
+      );
+
+
+      /* CLEAR CART */
+
+      localStorage.removeItem('cart');
+
+
+      /* SUCCESS PAGE */
+
+      window.location.href =
+        "order-success.html";
+
+    }
+  );
+
+
+/* ============================================================
+   ORDER FAILURE
+============================================================ */
+
+document
+  .getElementById('fail-order-btn')
+  .addEventListener(
+    'click',
+    function(){
+
+      const paymentMethod =
+        document.getElementById('payment-method')
+        .value;
+
+
+      window.adobeDataLayer.push({
+
+        event:"linkClicked",
+
+        xdmActionDetails:{
+
+          web:{
+
+            webInteraction:{
+
+              linkName:
+                "Order Failed",
+
+              brand:
+                "BeautifulStore",
+
+              linkPageName:
+                "Checkout - Address",
+
+              paymentMethod:
+                paymentMethod
+
+            }
+
+          },
+
+          commerce:{
+
+            order:{
+
+              totalAmount:
+                subtotal,
+
+              itemCount:
+                cart.length,
+
+              status:
+                "failed"
+
+            },
+
+            productListItems:
+              cart.map(getCartProductData)
+
+          },
+
+          custData:
+            getCustomerData(),
+
+          eventInfo:{
+
+            eventName:
+              "orderFailed"
+
+          }
+
+        }
+
+      });
+
+
+      window.location.href =
+        "order-failure.html";
+
+    }
+  );
+
+</script>
+
+</body>
+</html>
